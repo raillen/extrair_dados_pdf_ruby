@@ -6,7 +6,7 @@ module OS
     end
 
     
-    def self.create_text_file file_name = ""
+    def self.create_json_file file_name = ""
         home = ENV['HOME']
         file = ''
     

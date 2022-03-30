@@ -5,7 +5,7 @@ pdfs = pdf_counter(ARGV[0])
 
 OS.clear
 OS.install_dependencies
-sleep(3)
+sleep(2)
 OS.clear
 
 ## só uma barra de progresso.

@@ -1,4 +1,5 @@
 require 'pdf-reader'
+require 'json'
 require_relative 'utils.rb'
 
 def pdf_counter directories = ""
@@ -16,20 +17,18 @@ end
 
 def pdf_analysis pdf_array
 
-    data = {
-        pages: [],
-        pdf_directory: [],
-        pdf_quantity: 0,
-    }
+    data = []
 
     unless pdf_array.nil?
         pdf_array.each do |pdf|
-            data[:pdf_directory] << pdf
-            data[:pages] << PDF::Reader.new(pdf).page_count
-            data[:pdf_quantity] += 1
+            data.push({
+                pdf_name: "#{pdf.slice(pdf.rindex('/') + 1, pdf.size)}",
+                pages: PDF::Reader.new(pdf).page_count,
+                pdf_directory: pdf
+            })
         end
     else
-        data = "Não existem pdf's nesse diretório!"
+        data.push("Não existem pdf's nesse diretório!")
     end
 
     data
@@ -37,24 +36,6 @@ end
 
 
 def json_generator data
-
-    i = 0
-    pdf_infos = OS.create_text_file('pdf_infos')
-    pdf_directory = data[:pdf_directory]
-    pdf_pages = data[:pages]
-
-    pdf_infos << "[\n"
-        data[:pdf_quantity].times do     
-            pdf_infos << <<~info 
-                {
-                    "pdfName": "#{pdf_directory[i].slice(pdf_directory[i].rindex('/')+1, pdf_directory[i].size)}",
-                    "pdfPages": #{pdf_pages[i]},
-                    "pdfDirectory": "#{pdf_directory[i]}"
-                },
-                
-            info
-             
-            i+=1
-        end
-        pdf_infos << "]"
+    pdf_infos = OS.create_json_file('pdf_infos')
+    pdf_infos << JSON.pretty_generate(data)
 end
