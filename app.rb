@@ -18,5 +18,4 @@ end
 analise = pdf_analysis(pdfs)
 
 json_generator(analise)
-
-puts "\nArquivos .json gerado em #{ENV['HOME']}"
+OS.json_ok
