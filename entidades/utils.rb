@@ -29,7 +29,7 @@ module OS
     def self.install_dependencies
         puts 'Instalando dependências...'
         system("gem install bundler") if !system("gem list bundler")
-        system("bundle install")
+        system("bundle install") if !system('bundle check')
         puts "Dependências instaladas."
     end
 
@@ -42,6 +42,13 @@ module OS
             "\nArquivos .json gerado em #{ENV['HOME']}/desktop"
         else
             "\nArquivos .json gerado em #{ENV['HOME']}"
+        end
+    end
+
+    def self.progress_bar counter =[], sleep_time = 0 ## só uma barra de progresso.
+        0.step(100, (100/counter.size.to_f).ceil(2)) do |i|
+            print "Processando: #{i.ceil(2)}%\r"
+            sleep(sleep_time)
         end
     end
 end

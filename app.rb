@@ -8,14 +8,10 @@ OS.install_dependencies
 sleep(2)
 OS.clear
 
-## só uma barra de progresso.
-0.step(100, (100/pdfs.size.to_f).ceil(2)) do |i|
-    print "Processando: #{i.ceil(2)}%\r"
-    sleep(0.5)
-end
+OS.progress_bar pdfs, 0.2
 
 #retorna um objeto
 analise = pdf_analysis(pdfs)
 
 json_generator(analise)
-OS.json_ok
+puts OS.json_ok

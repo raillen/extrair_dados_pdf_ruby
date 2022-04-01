@@ -2,9 +2,9 @@ require 'pdf-reader'
 require 'json'
 require_relative 'utils.rb'
 
-def pdf_counter directories = ""
+def pdf_counter directory = ""
     pdfs = []
-    dir = Dir["#{'' + directories + ''}/**/*.{pdf}"]
+    dir = Dir["#{'' + directory + ''}/**/*.{pdf}"]
     ## se houver pdfs na pasta, serão adicionado ao array
     if dir.size > 0
         dir.each { |p| pdfs.push(p)}
