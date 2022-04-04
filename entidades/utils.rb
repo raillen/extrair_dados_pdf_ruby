@@ -45,10 +45,18 @@ module OS
         end
     end
 
-    def self.progress_bar counter =[], sleep_time = 0 ## só uma barra de progresso.
-        0.step(100, (100/counter.size.to_f).ceil(2)) do |i|
-            print "Processando: #{i.ceil(2)}%\r"
-            sleep(sleep_time)
+    ## just a fake progress bar
+    def self.progress_bar counter = [], sleep_time = 0
+        arr_size = counter.size.to_f
+        
+        
+        if counter.any?
+            0.step(100, (100/arr_size).ceil(2)) do |i|
+                print "Processando: #{i.ceil(2)}%\r"
+                sleep(sleep_time)
+            end
+        else
+            print "Processando: 100%"
         end
     end
 end
